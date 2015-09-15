@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predicting Height of Children from Parents' Heights</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Predicting Height of Children from Parents' Heights">
+  <meta name="author" content="GekPaard">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/quiz/css/demo.css"></link>
+<link rel=stylesheet href="libraries/widgets/bootstrap/css/bootstrap.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Predicting Height of Children from Parents' Heights</h1>
+    <h2>Developing Data Products (Coursera)</h2>
+    <p>GekPaard<br/>Department Pensionados</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The dating site &quot;Seconds from love&quot; wants to improve the selection of candidates for a new client.    They noticed that some clients wanted to know what the height of the children will be before they choose a certain candidate.<br></li>
+<li>Also the &quot;Association of Worried Fathers&quot; wants to have a cheap and fast way to determine if their children are really their offspring.</li>
+<li>The before mentionned parties have asked the firm &quot;GekPaard&quot; to make an App which calculates the expected height of children.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>The Solution</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In 1886 a famous statistician, sir Francis Galton, presented an article in which he showed that there is a linear relationship between the parents height and that of their children. (Galton, F.,  1886, Regression Towards Mediocrity in Hereditary Stature, Journal of the Anthropological Institute, 15, 246-263). </li>
+<li>This dataset is used to calculate the slope an the intercept of the childrens height. On the next slide an example of R code is shown how these were calculated. The length of the parents and children were measured in inches. For the ShinyApp they are recalculated  to the international standard meter. After that the linear model is calculated.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Calculation of the slope and intercept</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"> GaltonFamilies$childHeight     &lt;- round((GaltonFamilies$childHeight * 2.54)/100,3)
+ GaltonFamilies$midparentHeight &lt;- round((GaltonFamilies$midparentHeight * 2.54)/100,3)
+ fitSon         &lt;- lm(childHeight ~ midparentHeight, data=GaltonSon)
+ round(summary(fitSon)$coef[2,1], 3) ## the slope
+</code></pre>
+
+<pre><code>## [1] 0.713
+</code></pre>
+
+<pre><code class="r"> round(summary(fitSon)$coef[1,1], 3) ## the intercept
+</code></pre>
+
+<pre><code>## [1] 19.913
+</code></pre>
+
+<pre><code class="r"> round(summary(fitSon)$coef[2,2]*100, 0) ## the standard error in cm
+</code></pre>
+
+<pre><code>## [1] 6
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>The ShinyApp</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Here you can see how the App works. Just right mouse cick on the link below and open it in a new tab page or double click with the left mouse button. </p></li>
+<li><p><a href="https://dubbelgekpaard.shinyapps.io/testMap/">https://dubbelgekpaard.shinyapps.io/testMap/</a></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The Solution'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Calculation of the slope and intercept'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='The ShinyApp'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  <script src="libraries/widgets/quiz/js/jquery.quiz.js"></script>
+<script src="libraries/widgets/quiz/js/mustache.min.js"></script>
+<script src="libraries/widgets/quiz/js/quiz-app.js"></script>
+<script src="libraries/widgets/bootstrap/js/bootstrap.min.js"></script>
+<script src="libraries/widgets/bootstrap/js/bootbox.min.js"></script>
+
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<script>  
+  $(function (){ 
+    $("#example").popover(); 
+    $("[rel='tooltip']").tooltip(); 
+  });  
+  </script>  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
